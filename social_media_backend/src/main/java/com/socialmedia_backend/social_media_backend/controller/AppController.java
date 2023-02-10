@@ -69,4 +69,15 @@ public class AppController {
 
         return userrepo.save(newuser);
     }
+
+    @DeleteMapping(value = "/user/{id}")
+    public String deleteuser(@PathVariable int id) {
+
+        if (userrepo.existsById(id)) {
+            userrepo.deleteById(id);
+            return "message: User deleted successfully";
+        }
+
+        return "message: User doesn't exist";
+    }
 }
