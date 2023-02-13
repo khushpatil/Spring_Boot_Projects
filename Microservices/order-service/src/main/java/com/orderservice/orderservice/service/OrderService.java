@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.orderservice.orderservice.dto.ItemDto;
 import com.orderservice.orderservice.dto.OrderRequest;
+import com.orderservice.orderservice.dto.OrderResponse;
 import com.orderservice.orderservice.model.Item;
 import com.orderservice.orderservice.model.Order;
 import com.orderservice.orderservice.repository.OrderRepository;
@@ -37,5 +38,21 @@ public class OrderService {
         item.setPrice(itemDto.getPrice());
 
         return item;
+    }
+
+    public List<OrderResponse> getOrders() {
+        List<OrderResponse> allorders = orderRepo.findAll().stream()
+                .map(Order -> maptoResponse(Order))
+                .toList();
+
+        return allorders;
+    }
+
+    private OrderResponse maptoResponse(Order order) {
+        OrderResponse orderRes = new OrderResponse();
+        orderRes.setOrderNum(order.getOrderNum());
+        orderRes.setCart(order.getCart());
+
+        return orderRes;
     }
 }
