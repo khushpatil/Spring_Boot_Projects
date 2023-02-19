@@ -1,18 +1,15 @@
 package com.orderservice.orderservice.dto;
 
-import java.math.BigDecimal;
-
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ItemDto {
-
-    private Long id;
+@Builder
+public class InventoryResponse {
     private String skuCode;
-    private BigDecimal price;
-    private Integer quantity;
+    private boolean isInStock;
 }
