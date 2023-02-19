@@ -24,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 public class OrderService {
 
-    private final WebClient webClient;
+    private final WebClient.Builder webClientBuilder;
 
     private final OrderRepository orderRepo;
 
@@ -37,8 +37,8 @@ public class OrderService {
 
         List<String> skuCodes = order.getCart().stream().map(Item -> Item.getSkuCode()).toList();
 
-        InventoryResponse[] result = webClient.get()
-                .uri("http://localhost:8082/api/inventory",
+        InventoryResponse[] result = webClientBuilder.build().get()
+                .uri("http://inventory-service/api/inventory",
                         uriBuilder -> uriBuilder.queryParam("skuCode", skuCodes).build())
                 .retrieve()
                 .bodyToMono(InventoryResponse[].class)
